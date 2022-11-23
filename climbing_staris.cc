@@ -2,32 +2,28 @@
 #include <cstdlib>
 #include <vector>
 
-int climbing_stairs(int n, std::vector<int>& arr) {
-    int r;
-    if (n > 2) {
-        if (arr[n] != -1) {
-            return arr[n];
+class Solution {
+public:
+    int climbStairs(int n) {
+        if (n <= 2)
+            return n;
+        std::vector<int> arr = std::vector<int>(n + 1, -1);
+        arr[0] = 0;
+        arr[1] = 1;
+        arr[2] = 2;
+        for (int i = 3; i <= n; ++i) {
+            arr[i] = arr[i - 1] + arr[i - 2];
         }
-        r = climbing_stairs(n - 1, arr) + climbing_stairs(n - 2, arr);
-        arr[n] = r;
-        return r;
+        return arr[n];
     }
-    switch (n) {
-        case 2:
-           return 2;
-        case 1:
-            return 1;
-        default:
-            return 0;
-    }
-}
+};
 
 int main(int argc, char* argv[]) {
     if (argc <= 1)
         return 0;
     int n = strtol(argv[1], nullptr, 10);
-    std::vector<int> arr = std::vector<int>(n + 1, -1);
-    int r = climbing_stairs(n, arr);
+    Solution sol;
+    int r = sol.climbStairs(n);
     printf("%d combinations\n", r);
     return 0;
 }
